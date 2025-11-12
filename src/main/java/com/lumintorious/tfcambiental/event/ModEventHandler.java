@@ -1,6 +1,7 @@
 package com.lumintorious.tfcambiental.event;
 
 import com.lumintorious.tfcambiental.TFCAmbiental;
+import com.lumintorious.tfcambiental.TFCAmbientalConfig;
 import com.lumintorious.tfcambiental.TFCAmbientalGuiRenderer;
 import com.lumintorious.tfcambiental.item.TFCAmbientalItems;
 import net.minecraft.world.item.CreativeModeTab;
@@ -12,6 +13,8 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = TFCAmbiental.MOD_ID)
 public class ModEventHandler
@@ -29,6 +32,13 @@ public class ModEventHandler
                     event.accept(item);
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLoad(final net.minecraftforge.fml.event.config.ModConfigEvent.Loading event) {
+        if (Objects.equals(event.getConfig().getModId(), TFCAmbiental.MOD_ID)) {
+            TFCAmbientalConfig.LOADED = true;
         }
     }
 }
