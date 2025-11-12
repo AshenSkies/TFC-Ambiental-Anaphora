@@ -158,12 +158,4 @@ public class TFCAmbiental
             handler.accept(packet, context.get());
         });
     }
-
-    private static <T> void register(int id, Class<T> cls, Supplier<T> factory, BiConsumer<T, NetworkEvent.Context> handler) {
-        CHANNEL.registerMessage(id, cls, (packet, buffer) -> {
-        }, buffer -> factory.get(), (packet, context) -> {
-            context.get().setPacketHandled(true);
-            handler.accept(packet, context.get());
-        });
-    }
 }

@@ -16,6 +16,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.FlyNodeEvaluator;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
@@ -34,14 +35,15 @@ public interface EnvironmentalTemperatureProvider
                 player.getOnPos().above().offset(-radius, -radius, -radius),
                 player.getOnPos().above().offset(radius, 400, radius)
         );
-        Bee guineaPig = new Bee(EntityType.BEE, player.level());
-        guineaPig.setPos(player.getPosition(0));
-        guineaPig.setBaby(true);
+        Bee guineaBee = new Bee(EntityType.BEE, player.level());
+        guineaBee.setPos(player.getPosition(0));
+        guineaBee.setBaby(true);
+        guineaBee.setPathfindingMalus(BlockPathTypes.TRAPDOOR, -1.0F);
         FlyNodeEvaluator evaluator = new FlyNodeEvaluator();
         PathFinder finder = new PathFinder(evaluator, 500);
         Path path = finder.findPath(
                 region,
-                guineaPig,
+                guineaBee,
                 Set.of(player.getOnPos().above().atY(258)),
                 500,
                 0,
@@ -163,20 +165,22 @@ public interface EnvironmentalTemperatureProvider
     }
 
     static Optional<TempModifier> handleCozy(Player player) {
-        float temp = getEnvironmentTemperatureWithTimeOfDay(player);
-        float avg = TFCAmbientalConfig.COMMON.averageTemperature.get().floatValue();
+        if (TFCAmbientalConfig.COMMON.indoorCheckTickModifier.get() > 0) {
+            float temp = getEnvironmentTemperatureWithTimeOfDay(player);
+            float avg = TFCAmbientalConfig.COMMON.averageTemperature.get().floatValue();
 
-        if (temp < avg - 1) {
-            final boolean[] isInside = {false};
-            player.getCapability(TemperatureCapability.CAPABILITY).ifPresent(temperatureCapability -> {
-                if (player.tickCount % 20 == 0) {
-                    temperatureCapability.setInside(EnvironmentalTemperatureProvider.calculateEnclosure(player, 30));
+            if (temp < avg - 1) {
+                final boolean[] isInside = {false};
+                player.getCapability(TemperatureCapability.CAPABILITY).ifPresent(temperatureCapability -> {
+                    if (player.tickCount % TFCAmbientalConfig.COMMON.indoorCheckTickModifier.get() == 0) {
+                        temperatureCapability.setInside(EnvironmentalTemperatureProvider.calculateEnclosure(player, 30));
+                    }
+                    isInside[0] = temperatureCapability.isInside();
+                });
+
+                if (isInside[0]) {
+                    return TempModifier.defined("cozy", Math.abs(avg - 1 - temp) * 0.6f, 0f);
                 }
-                isInside[0] = temperatureCapability.isInside();
-            });
-
-            if (isInside[0]) {
-                return TempModifier.defined("cozy", Math.abs(avg - 1 - temp) * 0.6f, 0f);
             }
         }
         return TempModifier.none();

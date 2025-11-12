@@ -36,6 +36,8 @@ public class TFCAmbientalConfig
 
         public final ForgeConfigSpec.DoubleValue hotIngotTemperature;
 
+        public final ForgeConfigSpec.IntValue indoorCheckTickModifier;
+
         CommonImpl(ForgeConfigSpec.Builder builder) {
             averageTemperature = builder
                     .comment("The average point for temperature, the not too warm and not too cool point")
@@ -76,6 +78,10 @@ public class TFCAmbientalConfig
             hotIngotTemperature = builder
                     .comment("How much do items in the forge:hot_ingots tag modify the temperature of the player")
                     .defineInRange("hotIngotTemperature", 1F, 0F, Float.MAX_VALUE);
+
+            indoorCheckTickModifier = builder
+                    .comment("A modifier for the number of ticks between checking if a player is indoors. -1 to disable the check.")
+                    .defineInRange("indoorCheckTickModifier", 20, -1, Integer.MAX_VALUE);
 
         }
     }
