@@ -9,10 +9,13 @@ import java.util.function.Function;
 
 public class TFCAmbientalConfig
 {
-    public static CommonImpl COMMON = register(ModConfig.Type.COMMON, CommonImpl::new);
-    public static ClientImpl CLIENT = register(ModConfig.Type.CLIENT, ClientImpl::new);
+    public static boolean LOADED = false;
+    public static CommonImpl COMMON;
+    public static ClientImpl CLIENT;
 
     public static void init() {
+        COMMON = register(ModConfig.Type.COMMON, CommonImpl::new);
+        CLIENT = register(ModConfig.Type.CLIENT, ClientImpl::new);
     }
 
     private static <C> C register(ModConfig.Type type, Function<ForgeConfigSpec.Builder, C> factory) {
@@ -37,6 +40,13 @@ public class TFCAmbientalConfig
         public final ForgeConfigSpec.DoubleValue hotIngotTemperature;
 
         public final ForgeConfigSpec.IntValue indoorCheckTickModifier;
+
+        public final ForgeConfigSpec.IntValue durabilityBurlapClothes;
+        public final ForgeConfigSpec.IntValue durabilityInsulatedLeatherClothes;
+        public final ForgeConfigSpec.IntValue durabilityLeatherApronClothes;
+        public final ForgeConfigSpec.IntValue durabilitySilkClothes;
+        public final ForgeConfigSpec.IntValue durabilityStrawClothes;
+        public final ForgeConfigSpec.IntValue durabilityWoolClothes;
 
         CommonImpl(ForgeConfigSpec.Builder builder) {
             averageTemperature = builder
@@ -83,6 +93,29 @@ public class TFCAmbientalConfig
                     .comment("A modifier for the number of ticks between checking if a player is indoors. -1 to disable the check.")
                     .defineInRange("indoorCheckTickModifier", 20, -1, Integer.MAX_VALUE);
 
+            durabilityBurlapClothes = builder
+                    .comment("The durability value of Burlap material clothing.")
+                    .defineInRange("durabilityBurlapClothes", 3000, 0, Integer.MAX_VALUE);
+
+            durabilityInsulatedLeatherClothes = builder
+                    .comment("The durability value of Insulated Leather material clothing.")
+                    .defineInRange("durabilityInsulatedLeatherClothes", 2500, 0, Integer.MAX_VALUE);
+
+            durabilityLeatherApronClothes = builder
+                    .comment("The durability value of the Leather Apron clothing.")
+                    .defineInRange("durabilityLeatherApronClothes", 1000, 0, Integer.MAX_VALUE);
+
+            durabilitySilkClothes = builder
+                    .comment("The durability value of Silk material clothing.")
+                    .defineInRange("durabilitySilkClothes", 3000, 0, Integer.MAX_VALUE);
+
+            durabilityStrawClothes = builder
+                    .comment("The durability value of Straw material clothing.")
+                    .defineInRange("durabilityStrawClothes", 100, 0, Integer.MAX_VALUE);
+
+            durabilityWoolClothes = builder
+                    .comment("The durability value of Wool material clothing.")
+                    .defineInRange("durabilityWoolClothes", 3000, 0, Integer.MAX_VALUE);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.lumintorious.tfcambiental.item.material;
 
+import com.lumintorious.tfcambiental.TFCAmbientalConfig;
 import com.lumintorious.tfcambiental.modifier.TempModifier;
 import net.dries007.tfc.common.items.TFCItems;
 import net.minecraft.sounds.SoundEvent;
@@ -17,7 +18,8 @@ public class LeatherApronMaterial implements ArmorMaterial, TemperatureAlteringM
 
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
-        return 1000;
+        if (!TFCAmbientalConfig.LOADED) return 1;
+        return TFCAmbientalConfig.COMMON.durabilityLeatherApronClothes.get();
     }
 
     @Override
