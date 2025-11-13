@@ -10,6 +10,7 @@ import net.dries007.tfc.common.blockentities.FirepitBlockEntity;
 import net.dries007.tfc.common.capabilities.heat.HeatCapability;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.Locale;
@@ -66,6 +67,17 @@ public interface BlockEntityTemperatureProvider
                 change = change * 0.3f;
             }
             return TempModifier.defined("bloomery", change, 0);
+        }
+        return TempModifier.none();
+    }
+
+    static Optional<TempModifier> handleLitBlock(Player player, BlockEntity entity) {
+        if (entity.getBlockState().hasProperty(BlockStateProperties.LIT) && entity.getBlockState().getValue(BlockStateProperties.LIT)) {
+            float change = 3f;
+            if (hasProtection(player)) {
+                change = change * 0.3f;
+            }
+            return TempModifier.defined("lit_block", change, 0);
         }
         return TempModifier.none();
     }
