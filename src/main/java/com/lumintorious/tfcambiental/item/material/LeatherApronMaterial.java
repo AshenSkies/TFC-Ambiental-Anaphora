@@ -9,8 +9,11 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.ForgeConfig;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Supplier;
 
 public class LeatherApronMaterial implements ArmorMaterial, TemperatureAlteringMaterial
 {
@@ -19,7 +22,7 @@ public class LeatherApronMaterial implements ArmorMaterial, TemperatureAlteringM
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
         if (!TFCAmbientalConfig.LOADED) return 1;
-        return TFCAmbientalConfig.SERVER.durabilityLeatherApronClothes.get();
+        return TFCAmbientalConfig.COMMON.durabilityLeatherApronClothes.get();
     }
 
     @Override
