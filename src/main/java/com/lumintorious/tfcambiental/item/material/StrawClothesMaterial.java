@@ -19,7 +19,7 @@ public class StrawClothesMaterial implements ArmorMaterial, TemperatureAlteringM
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
         if (!TFCAmbientalConfig.LOADED) return 1;
-        return TFCAmbientalConfig.COMMON.durabilityStrawClothes.get();
+        return TFCAmbientalConfig.SERVER.durabilityStrawClothes.get();
     }
 
     @Override

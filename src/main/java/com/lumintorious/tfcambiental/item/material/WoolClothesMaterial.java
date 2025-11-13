@@ -19,7 +19,7 @@ public class WoolClothesMaterial implements ArmorMaterial, TemperatureAlteringMa
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
         if (!TFCAmbientalConfig.LOADED) return 1;
-        return TFCAmbientalConfig.COMMON.durabilityWoolClothes.get();
+        return TFCAmbientalConfig.SERVER.durabilityWoolClothes.get();
     }
 
     @Override

@@ -19,7 +19,7 @@ public class SilkClothesMaterial implements ArmorMaterial, TemperatureAlteringMa
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
         if (!TFCAmbientalConfig.LOADED) return 1;
-        return TFCAmbientalConfig.COMMON.durabilitySilkClothes.get();
+        return TFCAmbientalConfig.SERVER.durabilitySilkClothes.get();
     }
 
     @Override

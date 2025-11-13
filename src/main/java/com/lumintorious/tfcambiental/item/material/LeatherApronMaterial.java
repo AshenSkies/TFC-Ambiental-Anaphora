@@ -19,7 +19,7 @@ public class LeatherApronMaterial implements ArmorMaterial, TemperatureAlteringM
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
         if (!TFCAmbientalConfig.LOADED) return 1;
-        return TFCAmbientalConfig.COMMON.durabilityLeatherApronClothes.get();
+        return TFCAmbientalConfig.SERVER.durabilityLeatherApronClothes.get();
     }
 
     @Override

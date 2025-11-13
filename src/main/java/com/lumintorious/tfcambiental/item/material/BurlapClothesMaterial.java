@@ -19,7 +19,7 @@ public class BurlapClothesMaterial implements ArmorMaterial, TemperatureAltering
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
         if (!TFCAmbientalConfig.LOADED) return 1;
-        return TFCAmbientalConfig.COMMON.durabilityBurlapClothes.get();
+        return TFCAmbientalConfig.SERVER.durabilityBurlapClothes.get();
     }
 
     @Override

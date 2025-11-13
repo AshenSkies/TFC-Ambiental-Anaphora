@@ -19,7 +19,7 @@ public class InsulatedLeatherClothesMaterial implements ArmorMaterial, Temperatu
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
         if (!TFCAmbientalConfig.LOADED) return 1;
-        return TFCAmbientalConfig.COMMON.durabilityInsulatedLeatherClothes.get();
+        return TFCAmbientalConfig.SERVER.durabilityInsulatedLeatherClothes.get();
     }
 
     @Override
